@@ -701,12 +701,14 @@ LINENR {BLANK}*[1-9][0-9]*
                          return TK_WORD;
                        }
 <St_Para_Quot>"\""     {
-                         warn(g_fileName,g_yyLineNr,"Unclosed quotation (not formatting remaining text)",yytext);
+                         warn(yyextra->fileName,yyextra->yyLineNr,
+                              "Unclosed quotation (not formatting remaining text)",yytext);
                          unput_string("&quot;", 6);
                          BEGIN(St_Para);
                        }
 <St_Para_Quot>.        {
-                         warn(g_fileName,g_yyLineNr,"Unexpected character in quotation '%s'",yytext);
+                         warn(yyextra->fileName,yyextra->yyLineNr,
+                              "Unexpected character in quotation '%s'",yytext);
                          unput(yytext[0]);
                          BEGIN(St_Para);
                        }
